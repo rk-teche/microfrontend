@@ -1,0 +1,16 @@
+name: My Manual Workflow
+
+on:
+  workflow_dispatch:
+  # You can also keep other triggers like push or pull_request
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - run: npm install
+      # Your job steps go here
