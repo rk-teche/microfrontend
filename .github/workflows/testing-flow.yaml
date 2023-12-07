@@ -18,8 +18,11 @@ jobs:
         runs-on: ubuntu-latest # you could use different virtual machine 
 
         steps: 
-            - uses: actions/checkout@v2/large-app/container
-            - run: npm install
+            - uses: actions/checkout@v2
+
+            - name: Install dependencies
+              working-directory: large-app/container
+              run: npm install
             - run: npm run build
 
             - uses: shinyinc/action-aws-cli@v1.2
