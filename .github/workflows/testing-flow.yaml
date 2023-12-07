@@ -1,16 +1,30 @@
-name: My Manual Workflow
+  
+name: deploy-container
 
 on:
-  workflow_dispatch:
-  # You can also keep other triggers like push or pull_request
-  # push:
-  #   branches: [ main ]
-  # pull_request:
+    push:
+        branches: 
+            - main
+        paths:
+            - 'large-app/container/**'
+
+defaults:
+    run:
+        working-directory: packages/container
+
 
 jobs:
-  my_job:
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v2
-        - run: npm install
-      # Your job steps go here
+    build:
+        runs-on: ubuntu-latest # you could use different virtual machine 
+
+        steps: 
+            - uses: actions/checkout@v2
+            - run: npm install
+            - run: npm run build
+
+            - uses: shinyinc/action-aws-cli@v1.2
+            - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
