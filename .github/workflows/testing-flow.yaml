@@ -10,7 +10,7 @@ on:
 
 defaults:
     run:
-        working-directory: packages/container
+        working-directory: large-app/container
 
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
         runs-on: ubuntu-latest # you could use different virtual machine 
 
         steps: 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v2/large-app/container
             - run: npm install
             - run: npm run build
 
